@@ -1,0 +1,12 @@
+{
+  "name": "finder-pane",
+  "description": "Claude Code mod: list the local paths mentioned in a reply in a side pane and reveal them in Finder",
+  "owner": { "name": "i-noma-ru" },
+  "plugins": [
+    {
+      "name": "finder-pane",
+      "source": "./",
+      "description": "Collects local file/folder paths from each reply into a 'Files' pane; click or press a digit to reveal in Finder (macOS)"
+    }
+  ]
+}
