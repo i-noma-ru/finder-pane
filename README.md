@@ -33,7 +33,8 @@ It skips URLs, globs containing `*`, bare file names without a slash, and anythi
 ## Requirements
 
 - macOS (uses the `open` command). Not supported on Windows or Linux.
-- A terminal wide enough to dock a pane (about 110 columns or more) for the pane to open unasked.
+- For the pane to open unasked, a terminal of 144 columns or more (110 if you opened it with `/files` before and have not closed it by hand since). Opening it with `/files` works at any width.
+- When another mod's pane is open, an unasked pane may land in a tab behind it; a toast then says "ファイル N 件 — /files で表示" (N files, show with /files).
 
 ## Files
 

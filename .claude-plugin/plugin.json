@@ -1,6 +1,6 @@
 {
   "name": "finder-pane",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Collects the local file and folder paths mentioned in each reply into a 'Files' pane beside the chat; click a row or press its digit to reveal it in Finder (open -R). Toggle with /files. macOS only.",
   "license": "MIT",
   "author": { "name": "i-noma-ru" },

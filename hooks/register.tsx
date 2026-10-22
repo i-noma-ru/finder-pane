@@ -31,7 +31,7 @@ async function collect($: EngineInterface, answer: string): Promise<FinderRow[]>
     try {
       if (!(await $.fs.exists(abs))) continue
       const stat = await $.fs.stat(abs)
-      found.push({ abs, shown, isDir: stat.kind === 'directory' })
+      found.push({ abs, shown, isDir: stat.kind === 'dir' })
     } catch {
       // 読めない場所は載せない
     }
@@ -88,6 +88,11 @@ export const register: Register = on => {
     const isUp = (await $.ui.panes()).some(pane => pane.id === PANE_ID)
     if (!isUp) await openPane($)
     else $.ui.invalidate('ui.render')
+    // 頼まれずに開いたペインは他の MOD のペインの後ろのタブに入ることがあり、前に出す API は無い
+    const pane = (await $.ui.panes()).find(p => p.id === PANE_ID)
+    if (pane !== undefined && (!pane.isShown || !pane.isPlaced)) {
+      $.ui.toast(`ファイル ${found.length} 件 — /files で表示`)
+    }
     return done
   })
 
