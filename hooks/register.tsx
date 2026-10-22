@@ -2,7 +2,7 @@ import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
 import type { FinderRow } from '../types'
-import { baseName, extractCandidates, resolveAbs } from './logic'
+import { baseName, extractCandidates, isBundleName, resolveAbs } from './logic'
 
 const PANE_ID = 'finder-pane'
 const PANE_TITLE = 'ファイル'
@@ -31,7 +31,13 @@ async function collect($: EngineInterface, answer: string): Promise<FinderRow[]>
     try {
       if (!(await $.fs.exists(abs))) continue
       const stat = await $.fs.stat(abs)
-      found.push({ abs, shown, isDir: stat.kind === 'dir' })
+      // バンドル・リンクは open で起動しうるので、フォルダとして開かず open -R で見せるだけにする
+      const isDir =
+        stat.kind === 'dir' &&
+        !stat.isLink &&
+        !isBundleName(abs) &&
+        !(await $.fs.exists(`${abs}/Contents/Info.plist`))
+      found.push({ abs, shown, isDir })
     } catch {
       // 読めない場所は載せない
     }
@@ -65,11 +71,13 @@ export const register: Register = on => {
   })
 
   on('command.run', { command: 'files' }, async $ => {
-    const isUp = (await $.ui.panes()).some(pane => pane.id === PANE_ID)
-    if (isUp) {
+    const pane = (await $.ui.panes()).find(p => p.id === PANE_ID)
+    if (pane !== undefined && pane.isShown) {
       await $.ui.close({ id: PANE_ID })
       return { text: 'ファイルペインを閉じました。' }
     }
+    // 後ろのタブにいるペインは、閉じて開き直すと前に出る（再 open で前に出るかは API に書かれていない）
+    if (pane !== undefined) await $.ui.close({ id: PANE_ID })
     const placed = await openPane($)
     return {
       text: placed

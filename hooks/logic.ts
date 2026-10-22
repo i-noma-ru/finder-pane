@@ -39,6 +39,13 @@ export function resolveAbs(raw: string, cwd: string, home: string): string {
   return `${cwd.replace(/\/$/, '')}/${raw.replace(/^\.\//, '')}`
 }
 
+const BUNDLE_EXT = /\.(app|appex|bundle|framework|kext|mpkg|pkg|plugin|prefpane|qlgenerator|saver|service|workflow|xpc)$/i
+
+/** 中身はフォルダでも、open に渡すと起動・インストールしてしまうもの */
+export function isBundleName(p: string): boolean {
+  return BUNDLE_EXT.test(p.replace(/\/$/, ''))
+}
+
 /** 末尾の名前だけ（ペインが狭いときの表示用） */
 export function baseName(p: string): string {
   const parts = p.replace(/\/$/, '').split('/')

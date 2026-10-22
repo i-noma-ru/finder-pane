@@ -1,6 +1,6 @@
 # finder-pane
 
-A [Claude Code](https://claude.com/claude-code) mod for macOS. Every time Claude finishes a reply, the mod scans the reply text for local file and folder paths, keeps the ones that actually exist, and lists them in a **Files** pane beside the chat. Click a row, or focus the pane (`ctrl+x tab`) and press its digit, and the file is revealed in Finder (`open -R`); a folder is opened directly.
+A [Claude Code](https://claude.com/claude-code) mod for macOS. Every time Claude finishes a reply, the mod scans the reply text for local file and folder paths, keeps the ones that actually exist, and lists them in a **Files** pane beside the chat. Click a row, or focus the pane (`ctrl+x tab`) and press its digit, and the file is revealed in Finder (`open -R`); a folder is opened directly. Bundles such as `.app` and symbolic links are only revealed (`open -R`), so nothing is launched.
 
 日本語の説明は [README.ja.md](README.ja.md) にあります。
 
@@ -41,6 +41,7 @@ It skips URLs, globs containing `*`, bare file names without a slash, and anythi
 - `hooks/register.tsx`: hooks (`turn.complete`, `ui.render` for the pane, `/files`)
 - `hooks/logic.ts`: pure functions that extract and resolve paths
 - `types/index.d.ts`: the `$.state` contract
+- `tests/finder-pane.test.tsx`: tests for `claude plugin test`
 
 ## Status
 

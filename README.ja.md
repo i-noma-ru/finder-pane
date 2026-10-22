@@ -1,6 +1,6 @@
 # finder-pane — 返答に出たパスを Finder で開く
 
-Claude Code の MOD（Mac 専用）。Claude の返答が終わるたびに、本文からローカルのファイル・フォルダのパスらしい語を拾い、実在するものだけを会話の横の「ファイル」ペインに並べます。行をクリックするか、ペインに焦点を移して（`ctrl+x tab`）数字キーを押すと、ファイルは Finder で選択状態に（`open -R`）、フォルダはそのフォルダが開きます。
+Claude Code の MOD（Mac 専用）。Claude の返答が終わるたびに、本文からローカルのファイル・フォルダのパスらしい語を拾い、実在するものだけを会話の横の「ファイル」ペインに並べます。行をクリックするか、ペインに焦点を移して（`ctrl+x tab`）数字キーを押すと、ファイルは Finder で選択状態に（`open -R`）、フォルダはそのフォルダが開きます。`.app` などのバンドルとシンボリックリンクは、起動させないよう `open -R` で見せるだけにします。
 
 ## 入れ方
 
@@ -33,6 +33,7 @@ marketplace を足すかの問いに `y`、続けて範囲を選びます（user
 - `hooks/register.tsx`: フック（`turn.complete`・ペインの `ui.render`・`/files`）
 - `hooks/logic.ts`: パスの抽出と解決の純粋関数
 - `types/index.d.ts`: `$.state` の契約
+- `tests/finder-pane.test.tsx`: `claude plugin test` で回すテスト
 
 ## ライセンス
 
